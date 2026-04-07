@@ -27,6 +27,17 @@ export interface PokemonSprites {
   };
 }
 
+export interface PokemonMoveVersionDetail {
+  level_learned_at: number;
+  move_learn_method: { name: string; url: string };
+  version_group: { name: string; url: string };
+}
+
+export interface PokemonMove {
+  move: { name: string; url: string };
+  version_group_details: PokemonMoveVersionDetail[];
+}
+
 export interface Pokemon {
   id: number;
   name: string;
@@ -35,4 +46,5 @@ export interface Pokemon {
   sprites: PokemonSprites;
   height: number;
   weight: number;
+  moves: PokemonMove[];
 }

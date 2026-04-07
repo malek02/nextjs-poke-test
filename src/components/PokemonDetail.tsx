@@ -43,7 +43,7 @@ export default function PokemonDetail({ nameOrId }: PokemonDetailProps) {
     queryKey: pokemonKeys.species(nameOrId),
     queryFn: () => getSpecies(nameOrId),
   });
-
+console.log(species,pokemon);
   if (!pokemon || !species) return null;
 
   const primaryType = pokemon.types[0]?.type.name ?? "normal";
@@ -177,10 +177,10 @@ export default function PokemonDetail({ nameOrId }: PokemonDetailProps) {
             textAlign: "center",
             fontSize: 13,
             color: "#777",
-            margin: "0 auto 28px",
+            margin: "0 auto 18px",
             lineHeight: 1.7,
             fontFamily: "sans-serif",
-            maxWidth: 480,
+            maxWidth: 600,
           }}
         >
           {description}
@@ -208,17 +208,51 @@ export default function PokemonDetail({ nameOrId }: PokemonDetailProps) {
         )}
 
         {activeTab === PokemonDetailTab.Moves && (
-          <p
-            style={{
-              textAlign: "center",
-              color: "#bbb",
-              marginTop: 40,
-              fontFamily: "sans-serif",
-              fontSize: 14,
-            }}
-          >
-            Moves not available.
-          </p>
+          <div className="max-h-[160px] flex flex-col  mt-24 overflow-y-auto" style={{ width: 700, margin: "24px auto 0" }}>
+            {pokemon.moves.map((m, i) => {
+              const level =
+                m.version_group_details[0]?.level_learned_at ?? 0;
+              const name = m.move.name
+                .split("-")
+                .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(" ");
+              return (
+                <div
+                  key={m.move.name}
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    padding: "8px 0",
+                    borderBottom:
+                      i < pokemon.moves.length - 1
+                        ? "1px solid #f0f0f0"
+                        : "none",
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 500,
+                      color: "#333",
+                      fontFamily: "sans-serif",
+                    }}
+                  >
+                    {name}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 12,
+                      color: "#aaa",
+                      fontFamily: "sans-serif",
+                      marginTop: 2,
+                    }}
+                  >
+                    Level {level}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
         )}
       </div>
     </div>

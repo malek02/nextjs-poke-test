@@ -1,0 +1,14 @@
+node_modules
+npm-debug.log
+.next
+.git
+.gitignore
+.storybook
+src/**/*.stories.ts
+src/**/*.stories.tsx
+src/**/*.test.ts
+src/**/*.test.tsx
+coverage
+storybook-static
+README.md
+.env*
